@@ -1,0 +1,4 @@
+Complete MLFLOW Model --> MLProject file and test
+Connect Feature Store to Pipelines
+
+sudo lsof -i :1234

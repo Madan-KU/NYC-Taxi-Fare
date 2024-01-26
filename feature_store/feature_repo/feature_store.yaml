@@ -1,0 +1,6 @@
+project: feast_feature_store
+registry: feature_repo/db/registry.db
+provider: local
+online_store:
+    path: feature_repo/db/online_store.db
+entity_key_serialization_version: 2

@@ -1,0 +1,14 @@
+name: NYC_MLOPS
+conda_env: conda.yaml
+entry_points:
+  main:
+    parameters:
+      max_depth: {type: int, default: 10}
+      min_samples_leaf: {type: int, default: 10}
+      min_samples_split: {type: int, default: 8}
+    command: "python mlflow_script.py --max_depth {max_depth} --min_samples_leaf {min_samples_leaf} --min_samples_split {min_samples_split}"
+
+# To run the script using MLflow:
+#   - Run with default parameters: mlflow run .
+#   - Run without creating a new conda environment: mlflow run . --no-conda
+#   - Run with custom hyperparameter values: mlflow run . -P max_depth=12 -P min_samples_leaf=7 -P min_samples_split=5 --no-conda

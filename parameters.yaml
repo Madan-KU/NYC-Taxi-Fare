@@ -1,0 +1,67 @@
+data:
+  cleansed: data/cleansed
+  database: data/db
+  feature_engineered: data/feature_engineered
+  raw: data/raw
+  remote: data/remote
+  transformed:
+    X: data/transformed/X
+    y: data/transformed/y
+data_source:
+  remote_source: data/remote/fhvhv_tripdata_2023-01.parquet
+info:
+  project: NYC
+  random_state: 50
+  target_column: driver_pay
+logging:
+  format: '%(levelname)s: %(asctime)s: %(message)s'
+  level: INFO
+  log_file: logs/data.log
+mlflow_configuration:
+  artifacts_dir: artifacts
+  experiment_name: new_experiment
+  production_model: prediction_app/prediction_resources/serving_models
+  registered_model_name: GradientBoostingRegressor
+  remote_server_uri: http://127.0.0.1:1234
+  run_name: Regression
+model:
+  DecisionTreeRegressor:
+    class: models.decision_tree_regression_model.train_decision_tree_regression_model
+    name: DecisionTreeRegressor
+    params:
+      max_depth: 10
+      min_samples_leaf: 15
+      min_samples_split: 8
+  GradientBoostingRegressor:
+    class: models.gradient_boosting_regression_model.train_gradient_boosting_regression_model
+    name: GradientBoostingRegression
+    params:
+      learning_rate: 0.052206567607712674
+      max_depth: 20
+      min_samples_leaf: 7
+      min_samples_split: 8
+      n_estimators: 114
+  # Lasso:
+  #   class: models.lasso_regression_model.train_lasso_regression_model
+  #   name: LassoRegression
+  #   params:
+  #     alpha: 0.00016505457979693316
+  # Ridge:
+  #   class: models.ridge_regression_model.train_ridge_regression_model
+  #   name: RidgeRegression
+  #   params:
+  #     alpha: 3.550442344239066e-05
+prediction_app:
+  model: prediction_app/prediction_resources/serving_models
+  root_dir: prediction_app
+  scaler: prediction_app/prediction_resources/scaler
+reports:
+  metrics: report/metrics.json
+  metrics_history: report/metrics_history.json
+  params: report/params.json
+  reports: report
+saved_model_dir: model_artifacts/saved_models
+scaler_dir: model_artifacts/scaler
+train_evaluate:
+  split_data:
+    test_size: 0.3

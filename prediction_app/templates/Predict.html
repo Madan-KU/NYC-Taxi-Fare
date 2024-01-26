@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% endblock title %}
+
+{% block custom_css %}
+<style>
+.input-box {
+    border: 3px solid black;
+    padding: 10px;
+    margin: 10px 10px;
+    background-color: #f2f2f2; 
+    color: black;
+}
+
+.input-box textarea {
+    border: 1px solid #5d24fa; 
+    color: black;
+    margin-bottom: 10px;
+    /* width: 300px;
+    height: 50px; */
+}
+
+.input-box textarea:focus {
+    outline: none;
+    border-color: #8a2be2; 
+    box-shadow: 0 0 10px #3e1fec; 
+}
+
+.prediction-output-box {
+    border: 2px solid #704fff;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f2f2f2; 
+}
+</style>
+{% endblock custom_css %}
+
+{% block body %}
+
+<!-- Navbar with Background Color -->
+<nav class="navbar navbar-expand-lg bg-dark mt-3">
+  <!-- Navbar Content -->
+</nav>
+
+<!-- nav bar -->
+<nav class="navbar navbar-expand-lg navbar-light shadow fixed-top" style="background-color: #b6e1ff;">
+    <a class="navbar-brand" href="/">NYC Taxi Driver Fee Prediction</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+
+<div class="container-fluid masthead mt-5">
+<div class="container">
+    <div class="row">
+        <!-- Enter Input Box -->
+        <div class="col-md-4">
+            <h4 class="mb-2">Enter Input:</h4>
+            <form method="POST">
+                <div class="form-group">
+                    <div class="input-box">
+                        <textarea class="form-control" name="trip_miles" rows="2"
+                        placeholder="trip_miles"></textarea>
+                        <textarea class="form-control" name="trip_time" rows="2"
+                        placeholder="trip_time"></textarea>
+                        <textarea class="form-control" name="request_datetime_hour" rows="2"
+                        placeholder="request_datetime_hour"></textarea>
+                        <textarea class="form-control" name="request_datetime_day" rows="2"
+                        placeholder="request_datetime_day"></textarea>
+                        <textarea class="form-control" name="duration_minutes" rows="2"
+                        placeholder="duration_minutes"></textarea>
+                        <textarea class="form-control" name="wait_time_minutes" rows="2"
+                        placeholder="wait_time_minutes"></textarea>
+                        <textarea class="form-control" name="on_scene_datetime_hour" rows="2"
+                        placeholder="on_scene_datetime_hour"></textarea>
+                        <textarea class="form-control" name="on_scene_datetime_day" rows="2"
+                        placeholder="on_scene_datetime_day"></textarea>
+                        <textarea class="form-control" name="pickup_datetime_hour" rows="2"
+                        placeholder="pickup_datetime_hour"></textarea>
+                        <textarea class="form-control" name="pickup_datetime_day" rows="2"
+                        placeholder="pickup_datetime_day"></textarea>
+
+                        <textarea class="form-control" name="dropoff_datetime_hour" rows="2"
+                        placeholder="dropoff_datetime_hour"></textarea>
+                        <textarea class="form-control" name="dropoff_datetime_day" rows="2"
+                        placeholder="dropoff_datetime_day"></textarea>
+                        <textarea class="form-control" name="average_speed" rows="2"
+                        placeholder="average_speed"></textarea>
+
+
+
+
+
+                        <button type="submit" class="btn btn-primary mb-2">Predict</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <!-- JSON Input Box -->
+        <div class="col-md-4">
+            <h4>Alternative: Input as JSON</h4>
+            <div class="input-box">
+                <textarea id="json-input" class="form-control" rows="15">
+{
+    "trip_miles": 10.5,
+    "trip_time": 45.0,
+    "request_datetime_hour": 10,
+    "request_datetime_day": "Monday",
+    "duration_minutes": 25.5,
+    "wait_time_minutes": -5.5,
+    "wait_time_minutes": 15.0,
+    "on_scene_datetime_hour": 11,
+    "on_scene_datetime_day": "Monday",
+    "pickup_datetime_hour": 12,
+    "pickup_datetime_day": "Monday",
+    "dropoff_datetime_hour": 12,
+    "dropoff_datetime_day": "Monday",
+    "average_speed": 0.5
+}
+                </textarea>
+                <button id="json-predict-btn" type="button" class="btn btn-secondary mt-2">Predict with JSON</button>
+            </div>
+        </div>
+        <!-- Prediction Box -->
+        <div class="col-md-4">
+            <h4 class="mb-2">Prediction:</h4>
+            <div class="input-box">
+                <textarea readonly class="form-control" id="exTextarea" rows="2">{{ prediction }}</textarea>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+document.getElementById("json-predict-btn").addEventListener("click", function() {
+const jsonData = document.getElementById("json-input").value;
+
+fetch("/", {
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: jsonData
+})
+.then(response => response.json())
+.then(data => {
+// Update the prediction textarea with the result
+document.getElementById("exTextarea").value = data.prediction;
+})
+.catch(error => {
+console.error("Error:", error);
+});
+});
+</script>
+
+{% endblock body %}
+{% block custom_js %}
+<!-- Custom JS -->
+<script src="{{ url_for('static', filename='script/index.js') }}"></script>
+{% endblock custom_js %}

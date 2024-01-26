@@ -1,0 +1,14 @@
+mlflow
+fastapi
+feast
+flask
+dvc[gdrive]
+dvclive
+pandas
+numpy
+scikit-learn
+pyarrow
+redis
+uvicorn
+pydantic
+-e .

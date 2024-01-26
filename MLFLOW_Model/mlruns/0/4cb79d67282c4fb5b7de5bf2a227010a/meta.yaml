@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/4cb79d67282c4fb5b7de5bf2a227010a/artifacts
+end_time: 1706039905232
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 4cb79d67282c4fb5b7de5bf2a227010a
+run_name: upset-yak-345
+run_uuid: 4cb79d67282c4fb5b7de5bf2a227010a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1706039903551
+status: 4
+tags: []
+user_id: precision

@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/121761556033242162/d4c0904e1b4e4bd7a14253709db419ad/artifacts
+end_time: 1706039896578
+entry_point_name: ''
+experiment_id: '121761556033242162'
+lifecycle_stage: active
+run_id: d4c0904e1b4e4bd7a14253709db419ad
+run_name: DecisionTreeRegressor
+run_uuid: d4c0904e1b4e4bd7a14253709db419ad
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1706039893655
+status: 3
+tags: []
+user_id: precision

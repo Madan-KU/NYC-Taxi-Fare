@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/5bfa4aa7a6c04f688fc57b5f84b8b833/artifacts
+end_time: 1706039304720
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 5bfa4aa7a6c04f688fc57b5f84b8b833
+run_name: funny-fish-891
+run_uuid: 5bfa4aa7a6c04f688fc57b5f84b8b833
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1706039281282
+status: 4
+tags: []
+user_id: precision

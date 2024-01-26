@@ -1,0 +1,175 @@
+schema: '2.0'
+stages:
+  load_data:
+    cmd: python src/S01_load_data.py
+    deps:
+    - path: data/remote/fhvhv_tripdata_2023-01.parquet
+      hash: md5
+      md5: 3ab472a414ac50cb295911eed5691c32
+      size: 436535
+    - path: modules/data_loader.py
+      hash: md5
+      md5: f284e893dbe5061ed4fc390cb6cf0fa9
+      size: 842
+    - path: modules/logger_configurator.py
+      hash: md5
+      md5: 1da42425ed97671bb993ab3f555cbe73
+      size: 517
+    - path: src/S01_load_data.py
+      hash: md5
+      md5: 0f5cd9203e027009cea5213466baf07f
+      size: 3897
+    outs:
+    - path: data/raw/fhvhv_tripdata_2023-01.parquet
+      hash: md5
+      md5: 0944579f14db9d05567d731658f74616
+      size: 377716
+      isexec: true
+  clean_data:
+    cmd: python src/S02_clean_data.py
+    deps:
+    - path: data/raw/fhvhv_tripdata_2023-01.parquet
+      hash: md5
+      md5: 0944579f14db9d05567d731658f74616
+      size: 377716
+    - path: src/S02_clean_data.py
+      hash: md5
+      md5: 002c65fb6337401db1fc38ed7c568b7f
+      size: 2848
+    outs:
+    - path: data/cleansed/fhvhv_tripdata_2023-01.parquet
+      hash: md5
+      md5: 4dc58f0e1f20bcec7391fc64fa1a2914
+      size: 289779
+      isexec: true
+  feature_engineering:
+    cmd: python src/S03_feature_engineering.py
+    deps:
+    - path: data/cleansed/fhvhv_tripdata_2023-01.parquet
+      hash: md5
+      md5: 4dc58f0e1f20bcec7391fc64fa1a2914
+      size: 289779
+    - path: src/S03_feature_engineering.py
+      hash: md5
+      md5: 17b14cbccce19fd2666f7f45d2c26edc
+      size: 4498
+    outs:
+    - path: data/feature_engineered/fhvhv_tripdata_2023-01.parquet
+      hash: md5
+      md5: 0c3556ef83ad365bb49857a1c8df7aa9
+      size: 155680
+      isexec: true
+  transform_data:
+    cmd: python src/S04_transform_data.py
+    deps:
+    - path: data/feature_engineered/fhvhv_tripdata_2023-01.parquet
+      hash: md5
+      md5: 0c3556ef83ad365bb49857a1c8df7aa9
+      size: 155680
+    - path: src/S04_transform_data.py
+      hash: md5
+      md5: 57b23b7ae21f8e73ad9d7e384da715ea
+      size: 5717
+    outs:
+    - path: data/transformed/X/fhvhv_tripdata_2023-01.parquet
+      hash: md5
+      md5: 65222f9dc595d74db81e43a1c5e47b53
+      size: 199256
+      isexec: true
+    - path: data/transformed/y/fhvhv_tripdata_2023-01.parquet
+      hash: md5
+      md5: d21e43bb9368741a27a0489059dac860
+      size: 24279
+      isexec: true
+  model_training_and_evaluate:
+    cmd:
+    - python src/S05_train_and_evaluate.py --config=parameters.yaml
+    deps:
+    - path: data/transformed/X/fhvhv_tripdata_2023-01.parquet
+      hash: md5
+      md5: 65222f9dc595d74db81e43a1c5e47b53
+      size: 199256
+    - path: data/transformed/y/fhvhv_tripdata_2023-01.parquet
+      hash: md5
+      md5: d21e43bb9368741a27a0489059dac860
+      size: 24279
+    - path: modules/data_loader.py
+      hash: md5
+      md5: f284e893dbe5061ed4fc390cb6cf0fa9
+      size: 842
+    - path: modules/logger_configurator.py
+      hash: md5
+      md5: 1da42425ed97671bb993ab3f555cbe73
+      size: 517
+    - path: parameters.yaml
+      hash: md5
+      md5: 9390818d93706d7401b658ec9cc40cbc
+      size: 2075
+    - path: src/S05_train_and_evaluate.py
+      hash: md5
+      md5: fdfe2db6db3a2b42a8a477c0436bd7d8
+      size: 6181
+    outs:
+    - path: model_artifacts/saved_models
+      hash: md5
+      md5: 6db4e8b2f6b82d77da3fcecc56164e32.dir
+      size: 5099119
+      nfiles: 2
+    - path: report/metrics.json
+      hash: md5
+      md5: c756a575ed81fdeb442216be72d5f183
+      size: 376
+      isexec: true
+    - path: report/params.json
+      hash: md5
+      md5: 66aa91f0d88de0d06c0f08a3f0d031e2
+      size: 443
+      isexec: true
+  model_to_prediction_service:
+    cmd:
+    - python  src/S06_model_to_prediction_service.py
+    deps:
+    - path: model_artifacts/saved_models
+      hash: md5
+      md5: 6db4e8b2f6b82d77da3fcecc56164e32.dir
+      size: 5099119
+      nfiles: 2
+    - path: modules/logger_configurator.py
+      hash: md5
+      md5: 1da42425ed97671bb993ab3f555cbe73
+      size: 517
+    - path: modules/read_config.py
+      hash: md5
+      md5: 51609abfd1a81335e6409ee2dac3a8fd
+      size: 182
+    - path: parameters.yaml
+      hash: md5
+      md5: 9390818d93706d7401b658ec9cc40cbc
+      size: 2075
+    - path: src/S06_model_to_prediction_service.py
+      hash: md5
+      md5: 2a0a886e467cd4a7e4df4de6e2d256d2
+      size: 3050
+    outs:
+    - path: prediction_app/prediction_resources/scaler
+      hash: md5
+      md5: 8d31ed1fabcc9bda7a9acd3656210a1d.dir
+      size: 1256
+      nfiles: 2
+    - path: prediction_app/prediction_resources/serving_models/
+      hash: md5
+      md5: 2581e7a30962cb0d65f0fb6fce33930b.dir
+      size: 21290
+      nfiles: 1
+  logging_production_model:
+    cmd: python src/S07_logging_production_model.py --config=params.yaml
+    deps:
+    - path: model_artifacts/saved_models
+      hash: md5
+      md5: 6db4e8b2f6b82d77da3fcecc56164e32.dir
+      size: 5099119
+      nfiles: 2
+    - path: src/S07_logging_production_model.py
+      hash: md5
+      md5: 039560745f31f6659742872cb4f2b1a0
+      size: 5050

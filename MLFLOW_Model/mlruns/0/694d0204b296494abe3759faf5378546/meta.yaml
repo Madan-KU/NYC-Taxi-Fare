@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/694d0204b296494abe3759faf5378546/artifacts
+end_time: 1706039582377
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 694d0204b296494abe3759faf5378546
+run_name: whimsical-skink-638
+run_uuid: 694d0204b296494abe3759faf5378546
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1706039580701
+status: 4
+tags: []
+user_id: precision

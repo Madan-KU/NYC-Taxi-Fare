@@ -1,0 +1,10 @@
+name: MLOPS
+channels:
+  - defaults
+dependencies:
+  - mlflow
+  - scikit-learn
+  - python=3.10.0
+  - pip:
+
+prefix: /home/precision/miniconda3/envs/MLOPS

@@ -1,0 +1,6 @@
+outs:
+- md5: 3ab472a414ac50cb295911eed5691c32
+  size: 436535
+  hash: md5
+  path: fhvhv_tripdata_2023-01.parquet
+  isexec: true

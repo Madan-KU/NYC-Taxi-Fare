@@ -1,0 +1,28 @@
+[Unit]
+Description=FastAPI Application NYC TAXI
+After=network.target
+
+[Service]
+ExecStart="/mnt/hgfs/DS/NYC MLOPS/fastapi/run_fastapi.sh"
+WorkingDirectory=/mnt/hgfs/DS/NYC MLOPS/
+User=ubuntu
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+## Notes
+#Copy file to /etc/systemd/system/nyc_fastapi_app.service
+#sudo cp nyc_fastapi_app.service /etc/systemd/system/
+
+#Enable the service
+#sudo systemctl enable my_fastapi_app
+
+#Start the service
+#sudo systemctl start my_fastapi_app
+
+#Check the status of the service
+#sudo systemctl status my_fastapi_app
+
+#View the service logs
+#journalctl -u my_fastapi_app -e

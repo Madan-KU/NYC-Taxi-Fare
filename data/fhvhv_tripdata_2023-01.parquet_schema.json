@@ -1,0 +1,111 @@
+{
+    "trip_miles": {
+        "data_type": "float64",
+        "min_value": 0.0,
+        "max_value": 21.77
+    },
+    "trip_time": {
+        "data_type": "float64",
+        "min_value": 20.0,
+        "max_value": 3329.0
+    },
+    "driver_pay": {
+        "data_type": "float64",
+        "min_value": 0.0,
+        "max_value": 59.1
+    },
+    "access_a_ride_flag": {
+        "data_type": "object",
+        "unique_values_count": 2,
+        "most_frequent_value": " ",
+        "frequency_of_most_frequent": 239651
+    },
+    "request_datetime_hour": {
+        "data_type": "int32",
+        "min_value": 0.0,
+        "max_value": 23.0
+    },
+    "request_datetime_day": {
+        "data_type": "category",
+        "unique_values_count": 7,
+        "most_frequent_value": "Sunday",
+        "frequency_of_most_frequent": 40236
+    },
+    "request_datetime_month": {
+        "data_type": "category",
+        "unique_values_count": 2,
+        "most_frequent_value": "January",
+        "frequency_of_most_frequent": 239756
+    },
+    "duration_minutes": {
+        "data_type": "float64",
+        "min_value": 0.3333333333333333,
+        "max_value": 55.483333333333334
+    },
+    "wait_time_minutes": {
+        "data_type": "float64",
+        "min_value": -43.5,
+        "max_value": 48.266666666666666
+    },
+    "service_time_minutes": {
+        "data_type": "float64",
+        "min_value": 0.38333333333333336,
+        "max_value": 65.65
+    },
+    "on_scene_datetime_hour": {
+        "data_type": "int32",
+        "min_value": 0.0,
+        "max_value": 23.0
+    },
+    "on_scene_datetime_day": {
+        "data_type": "category",
+        "unique_values_count": 7,
+        "most_frequent_value": "Sunday",
+        "frequency_of_most_frequent": 40346
+    },
+    "on_scene_datetime_month": {
+        "data_type": "category",
+        "unique_values_count": 2,
+        "most_frequent_value": "January",
+        "frequency_of_most_frequent": 239765
+    },
+    "pickup_datetime_hour": {
+        "data_type": "int32",
+        "min_value": 0.0,
+        "max_value": 23.0
+    },
+    "pickup_datetime_day": {
+        "data_type": "category",
+        "unique_values_count": 7,
+        "most_frequent_value": "Sunday",
+        "frequency_of_most_frequent": 40371
+    },
+    "pickup_datetime_month": {
+        "data_type": "category",
+        "unique_values_count": 1,
+        "most_frequent_value": "January",
+        "frequency_of_most_frequent": 239768
+    },
+    "dropoff_datetime_hour": {
+        "data_type": "int32",
+        "min_value": 0.0,
+        "max_value": 23.0
+    },
+    "dropoff_datetime_day": {
+        "data_type": "category",
+        "unique_values_count": 7,
+        "most_frequent_value": "Sunday",
+        "frequency_of_most_frequent": 40746
+    },
+    "dropoff_datetime_month": {
+        "data_type": "category",
+        "unique_values_count": 2,
+        "most_frequent_value": "January",
+        "frequency_of_most_frequent": 239705
+    },
+    "average_speed": {
+        "data_type": "float64",
+        "min_value": 0.0,
+        "max_value": 0.8449074074074073
+    }
+}

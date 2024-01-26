@@ -1,0 +1,91 @@
+stages:
+  load_data:
+    cmd: python src/S01_load_data.py
+    deps:
+    - modules/logger_configurator.py
+    - modules/data_loader.py
+    - src/S01_load_data.py
+    - data/remote/fhvhv_tripdata_2023-01.parquet
+    outs:
+    - data/raw/fhvhv_tripdata_2023-01.parquet
+
+  clean_data:
+    cmd: python src/S02_clean_data.py
+    deps:
+    - src/S02_clean_data.py
+    - data/raw/fhvhv_tripdata_2023-01.parquet
+    outs:
+    - data/cleansed/fhvhv_tripdata_2023-01.parquet
+
+  feature_engineering:
+    cmd: python src/S03_feature_engineering.py
+    deps:
+    - src/S03_feature_engineering.py
+    - data/cleansed/fhvhv_tripdata_2023-01.parquet
+    outs:
+    - data/feature_engineered/fhvhv_tripdata_2023-01.parquet
+
+  transform_data:
+    cmd: python src/S04_transform_data.py
+    deps:
+    - src/S04_transform_data.py
+    - data/feature_engineered/fhvhv_tripdata_2023-01.parquet
+    outs:
+    - data/transformed/X/fhvhv_tripdata_2023-01.parquet
+    - data/transformed/y/fhvhv_tripdata_2023-01.parquet
+
+  # open_mlflow:
+  #   cmd:
+  #     - mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./artifacts --host 0.0.0.0 -p 1234
+
+  model_training_and_evaluate:
+    cmd:
+    - python src/S05_train_and_evaluate.py --config=parameters.yaml
+    deps:
+    - src/S05_train_and_evaluate.py
+    - modules/data_loader.py
+    - modules/logger_configurator.py
+    - parameters.yaml
+    - data/transformed/X/fhvhv_tripdata_2023-01.parquet
+    - data/transformed/y/fhvhv_tripdata_2023-01.parquet
+    metrics:
+    - report/metrics.json:
+        cache: false
+
+    - report/params.json:
+        cache: false
+    # params:
+    # - model.SVR.params.kernel
+    # - model.SVR.params.C
+    # - model.GradientBoostingRegressor.params.n_estimators
+    # - model.GradientBoostingRegressor.params.learning_rate
+    # - model.Ridge.params.alpha
+    # - model.Lasso.params.alpha
+    # - model.DecisionTreeRegressor.params.max_depth
+    # - model.DecisionTreeRegressor.params.min_samples_leaf
+    # - model.DecisionTreeRegressor.params.min_samples_split
+    outs:
+    - model_artifacts/saved_models
+
+
+  model_to_prediction_service:
+    cmd:
+    - python  src/S06_model_to_prediction_service.py
+      # - mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./artifacts --host 0.0.0.0 -p 1234
+    deps:
+    - src/S06_model_to_prediction_service.py
+    - modules/read_config.py
+    - modules/logger_configurator.py
+    - parameters.yaml
+    - model_artifacts/saved_models
+    outs:
+    - prediction_app/prediction_resources/serving_models/
+    - prediction_app/prediction_resources/scaler
+
+  logging_production_model:
+    cmd: python src/S07_logging_production_model.py --config=params.yaml
+    deps:
+    - src/S07_logging_production_model.py
+    - model_artifacts/saved_models
+params:
+- dvclive/params.yaml

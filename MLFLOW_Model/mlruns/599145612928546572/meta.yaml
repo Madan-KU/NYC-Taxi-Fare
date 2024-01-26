@@ -1,0 +1,6 @@
+artifact_location: mlflow-artifacts:/599145612928546572
+creation_time: 1706039304586
+experiment_id: '599145612928546572'
+last_update_time: 1706039304586
+lifecycle_stage: active
+name: DecisionTreeRegressor
